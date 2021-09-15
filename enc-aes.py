@@ -1,3 +1,6 @@
+# shell-aes.py
+# author: @cocomelonc
+# windows reverse shell AES encryptor (only cmd.exe now)
 import sys
 import os
 from Crypto.Cipher import AES
@@ -15,6 +18,10 @@ def convert(data):
         output_str += hex(ordd(current))
     return output_str.split("0x")
 
+# AES encryption
+# key is randomized (16 bytes random string),
+# and the key is then transform into the SHA256 hash and
+# then it is used as a key for encrypting plaintext
 def AESencrypt(plaintext, key):
     k = hashlib.sha256(key).digest()
     iv = 16 * '\x00'
@@ -24,7 +31,6 @@ def AESencrypt(plaintext, key):
     ciphertext, key = convert(ciphertext), convert(key)
     ciphertext = '{' + (' 0x'.join(x + "," for x in ciphertext)).strip(",") + ' };'
     key = '{' + (' 0x'.join(x + "," for x in key)).strip(",") + ' };'
-    # print (ciphertext, key)
     return ciphertext, key
 
 my_secret_key = urandom(16)
